@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fff;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            padding: 20px;
+            width: 500px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        img{
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+        h1 {   
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #5cb85c;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 50%;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+        p{
+            text-align: center;
+        }
+        #qrcode {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Enter your URL</h1>
+        <input type="text" id="text-input" placeholder="Enter text or URL">
+        <button id="generate-btn">Generate QR Code</button>
+        <p>Live preview</p>
+        <img id="default-img" src="./qr-code.png" alt="">
+        <canvas id="qrcode" style="display: none;"></canvas>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script>
+       var qr;
+
+        document.getElementById('generate-btn').addEventListener('click', function () {
+            var text = document.getElementById('text-input').value;
+
+            if (!text) {
+                alert("Please enter some text or URL");
+                return;
+            }
+
+            // Hide the default image
+            document.getElementById('default-img').style.display = 'none';
+            // Show the QR code canvas
+            document.getElementById('qrcode').style.display = 'block';
+
+            if (qr) {
+                qr.set({
+                    value: text
+                });
+            } else {
+                qr = new QRious({
+                    element: document.getElementById('qrcode'),
+                    value: text,
+                    size: 200
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
